@@ -1,54 +1,66 @@
-# Name Scrubbing Tool
+# Owner Name Scrubber
 
-This tool uses a trained machine learning model to clean owner names from real estate datasets. It distinguishes between human names and potential company names.
+
+This tool refines a dataset containing owner names (e.g., from real estate records) by:
+
+1. Classifying names as "Human Name" or "Not Human Name" using a pre-trained machine learning model.
+2. Filtering out potential company/non-human names based on the classification and a list of common business keywords.
 
 ## Prerequisites
 
-- **Python:** Install Python (3.6 or later) if you haven't already. You can download it from [https://www.python.org/downloads/](https://www.python.org/downloads/).
+- **Python:** Install Python (3.6 or later) if you don't have it. Download from [https://www.python.org/downloads/](https://www.python.org/downloads/).
 - **Dependencies:** Install the required Python packages:
-
-   ```bash
-   pip install pandas scikit-learn pickle
-   ```
+  ```bash
+  pip install pandas scikit-learn pickle
+  ```
 
 ## Usage Instructions
 
-1. **Prepare Your Data:**
-   - Place your input Excel file (e.g., "MI 2 Rows of Couties North of IN-OH.xlsx") in the "Data" folder relative to your notebook's location. The file should contain the columns:
+1. **Data Preparation:**
+   - Place your input Excel file (e.g., "MI 2 Rows of Couties North of IN-OH.xlsx") in the same directory as this Python script. 
+   - The file must have the following columns:
      - `MAIL_ADDR`
      - `MAIL_CITY`
      - `MAIL_STATE`
      - `MAIL_ZIP`
      - `OWNER_NAME_1`
 
-2. **Trained Model and Vectorizer:**
-   - Ensure you have the following files in the same directory as your notebook:
+2. **Model and Vectorizer:**
+   - Ensure these files are also in the same directory as the script:
      - `logreg_classifier.pickle`: The trained logistic regression model.
-     - `logreg_vectorizer.pickle`: The TF-IDF vectorizer used to transform the names.
-     - `AR Top 10 Zips July 31 2024 - 3-9.99 ac Tested.xlsx`: A list of previously predicted human names used for additional filtering
+     - `logreg_vectorizer.pickle`: The TF-IDF vectorizer used for text preprocessing.
 
-3. **Modify Configuration (Optional):**
-   - **`EXCEL_FILE_PATH`:** If your data is in a different location, update this variable in the notebook accordingly.
-   - **`Suspected_Words`:** If you want to customize the list of words used to identify company names, modify this list.
-
-4. **Run the Notebook:**
-   - Execute the Python notebook. It will:
-     - Load the data.
-     - Remove rows with missing values and duplicates based on address.
+3. **Run the Script:**
+   - Execute the Python script. It will perform the following:
+     - Load and clean the data (remove missing values, duplicates).
      - Load the trained model and vectorizer.
-     - Make predictions on the `OWNER_NAME_1` column.
-     - Filter out potential company names based on the `Suspected_Words` list and additional human names filtering.
-     - Save the cleaned results to a new Excel file with the suffix " SCRUBBED" in the same directory as your input data.
+     - Predict whether each `OWNER_NAME_1` is a "Human Name" or not.
+     - Save an intermediate file (`MI 2 Rows of Couties North of IN-OH.xlsx Classified.xlsx`) with the predictions.
+     - Filter out names classified as "Not Human Name" using both:
+       - A list of previously identified human names from a separate dataset.
+       - A keyword-based filter to remove common business terms (`company_keywords`).
+     - Save the final cleaned data to `MI 2 Rows of Couties North of IN-OH.xlsx SCRUBBED.xlsx`.
 
-## Important Notes
 
-- **Model Accuracy:** The accuracy of the model might vary depending on the nature of your dataset. If the model's performance isn't satisfactory, you might need to retrain it on a more representative dataset.
-- **Customizable:** Feel free to modify the `Suspected_Words` list or add more sophisticated filtering rules to better suit your specific requirements.
 
+## How It Works
+
+1. **Data Loading and Cleaning:** The script reads the Excel file, removes rows with missing data in key columns, and eliminates duplicates based on the mailing address.
+2. **Model and Vectorizer Loading:** The trained model and the vectorizer used during training are loaded from the `pickle` files.
+3. **Prediction:** The model predicts the category ("Human Name" or "Not Human Name") for each `OWNER_NAME_1` entry.
+4. **Filtering:** The script applies two filters to remove potential non-human names:
+   - **Human Name List Filtering:** It compares the names against a list of known human names. If a name is not in the list, it's considered a potential company name.
+   - **Keyword-Based Filtering:**  It checks if a name contains any words from the `company_keywords` list. If it does, the name is treated as a company name.
+
+## Customization
+
+- **Keywords:** You can tailor the `company_keywords` list to better suit your specific domain and the types of company names you want to remove.
+- **Filtered Names:** If you have another dataset with reliable "Human Name" classifications, you can use it for more effective filtering.
+- **Model:** The script currently uses logistic regression. If needed, you can retrain the model with different algorithms or features for potentially better performance.
 
 
 ## Troubleshooting
 
-- **File Not Found:** Make sure your Excel file is in the correct location and the file path in the `EXCEL_FILE_PATH` variable is accurate.
-- **Missing Columns:** Ensure your Excel file has the necessary columns (`MAIL_ADDR`, `MAIL_CITY`, `MAIL_STATE`, `MAIL_ZIP`, `OWNER_NAME_1`).
-- **Model/Vectorizer Issues:** If you encounter problems loading the model or vectorizer, ensure they are in the correct format and were saved correctly during the training process.
+- **Missing Files:** Ensure all required files (Excel data, model, vectorizer) are in the same directory as the script or provide the correct file paths.
+- **Column Names:** Double-check that your Excel file has the exact column names specified (`MAIL_ADDR`, `MAIL_CITY`, `MAIL_STATE`, `MAIL_ZIP`, `OWNER_NAME_1`).
+- **Model/Vectorizer Errors:** If errors occur while loading the model or vectorizer, verify that they were saved correctly during training.
