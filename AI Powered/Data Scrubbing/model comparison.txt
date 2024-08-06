@@ -1,0 +1,94 @@
+KNN: CV Accuracy: 0.98 (+/- 0.001)
+Accuracy on Synthetic Data: 88.35%
+              precision    recall  f1-score   support
+
+Company Name       0.85      0.93      0.89      5029
+  Human Name       0.92      0.84      0.88      4971
+
+    accuracy                           0.88     10000
+   macro avg       0.89      0.88      0.88     10000
+weighted avg       0.89      0.88      0.88     10000
+
+[[4669  360]
+ [ 805 4166]]
+
+----------------------------------------
+
+SVC: CV Accuracy: 0.99 (+/- 0.0)
+Accuracy on Synthetic Data: 92.04%
+              precision    recall  f1-score   support
+
+Company Name       1.00      0.84      0.91      5029
+  Human Name       0.86      1.00      0.93      4971
+
+    accuracy                           0.92     10000
+   macro avg       0.93      0.92      0.92     10000
+weighted avg       0.93      0.92      0.92     10000
+
+[[4233  796]
+ [   0 4971]]
+
+----------------------------------------
+
+DecisionTree: CV Accuracy: 0.972 (+/- 0.001)
+Accuracy on Synthetic Data: 80.68%
+              precision    recall  f1-score   support
+
+Company Name       0.85      0.75      0.80      5029
+  Human Name       0.78      0.86      0.82      4971
+
+    accuracy                           0.81     10000
+   macro avg       0.81      0.81      0.81     10000
+weighted avg       0.81      0.81      0.81     10000
+
+[[3786 1243]
+ [ 689 4282]]
+
+----------------------------------------
+
+RandomForest: CV Accuracy: 0.987 (+/- 0.001)
+Accuracy on Synthetic Data: 85.62%
+              precision    recall  f1-score   support
+
+Company Name       1.00      0.71      0.83      5029
+  Human Name       0.78      1.00      0.87      4971
+
+    accuracy                           0.86     10000
+   macro avg       0.89      0.86      0.85     10000
+weighted avg       0.89      0.86      0.85     10000
+
+[[3591 1438]
+ [   0 4971]]
+
+----------------------------------------
+AdaBoost: CV Accuracy: 0.966 (+/- 0.002)
+Accuracy on Synthetic Data: 71.20%
+              precision    recall  f1-score   support
+
+Company Name       1.00      0.43      0.60      5029
+  Human Name       0.63      1.00      0.78      4971
+
+    accuracy                           0.71     10000
+   macro avg       0.82      0.71      0.69     10000
+weighted avg       0.82      0.71      0.69     10000
+
+[[2149 2880]
+ [   0 4971]]
+
+----------------------------------------
+
+GradientBoost: CV Accuracy: 0.967 (+/- 0.002)
+Accuracy on Synthetic Data: 74.01%
+              precision    recall  f1-score   support
+
+Company Name       0.96      0.50      0.66      5029
+  Human Name       0.66      0.98      0.79      4971
+
+    accuracy                           0.74     10000
+   macro avg       0.81      0.74      0.72     10000
+weighted avg       0.81      0.74      0.72     10000
+
+[[2528 2501]
+ [  98 4873]]
+
+----------------------------------------
